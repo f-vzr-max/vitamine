@@ -1,0 +1,18 @@
+{
+  "slug": "liquidation-dashboard",
+  "source_task": "Build a multi-user company management dashboard for Gestion Frippes' end-of-year depot liquidation. Next.js on Vercel, shared Postgres DB.",
+  "dedup_key": "build multi-user company management dashboard gestion frippes depot liquidation nextjs vercel postgres",
+  "stage": "scope",
+  "attempt": 1,
+  "maxAttempts": 3,
+  "loopbacks": 0,
+  "valves": [],
+  "route": null,
+  "mode": null,
+  "criteriaPath": "docs/solve/liquidation-dashboard/criteria.md",
+  "filemapPath": "docs/solve/liquidation-dashboard/filemap.md",
+  "branch": "solve/liquidation-dashboard",
+  "verdicts": { "redteam1": null, "advVerify": null, "redteam2": null, "audit": null },
+  "testResult": null,
+  "failureDigest": null
+}

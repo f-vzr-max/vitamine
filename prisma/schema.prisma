@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Article {
+  id           String   @id @default(cuid())
+  name         String
+  priceArBalle Int
+  stock        Int      @default(0)
+  createdBy    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sales        Sale[]
+}
+
+model PressLog {
+  id        String   @id @default(cuid())
+  /// Calendar date "YYYY-MM-DD", not DateTime -- avoids host-timezone-dependent date parsing (pg's DATE type parses to local midnight).
+  date      String
+  qty       Int
+  createdBy String
+  createdAt DateTime @default(now())
+}
+
+model Sale {
+  id          String   @id @default(cuid())
+  /// Calendar date "YYYY-MM-DD", see PressLog.date.
+  date        String
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id])
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id])
+  qty         Int
+  unitPriceAr Int
+  revenueAr   Int
+  createdBy   String
+  createdAt   DateTime @default(now())
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  contact   String?
+  createdBy String
+  createdAt DateTime @default(now())
+  sales     Sale[]
+}
+
+model Employee {
+  id        String            @id @default(cuid())
+  name      String
+  createdBy String
+  createdAt DateTime          @default(now())
+  shifts    ShiftAssignment[]
+}
+
+model ShiftAssignment {
+  id            String   @id @default(cuid())
+  employeeId    String
+  employee      Employee @relation(fields: [employeeId], references: [id])
+  /// Calendar date "YYYY-MM-DD", see PressLog.date.
+  date          String
+  half          String
+  isRestHalfDay Boolean  @default(false)
+  createdBy     String
+  createdAt     DateTime @default(now())
+}
+
+model LiquidationConfig {
+  id                   String   @id @default("singleton")
+  vracBaselineBales    Int      @default(4200)
+  prePressedStockBales Int      @default(0)
+  updatedAt            DateTime @updatedAt
+}
