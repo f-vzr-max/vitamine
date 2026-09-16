@@ -2,6 +2,7 @@ import {
   computeDaysRemaining as targetDaysRemaining,
   computeTargetPressedPct,
   computeTargetSoldPct,
+  isValidDateStr,
   parseDateUTC,
 } from "@/lib/targets";
 
@@ -90,21 +91,24 @@ export type CashReconciliationResult = {
   byWeek: { weekStart: string; totalAr: number }[];
 };
 
-/** Monday of the ISO week containing dateStr, as "YYYY-MM-DD". */
-export function weekStartOf(dateStr: string): string {
+/** Monday of the ISO week containing dateStr, as "YYYY-MM-DD", or null if dateStr is not a valid calendar date. */
+export function weekStartOf(dateStr: string): string | null {
+  if (!isValidDateStr(dateStr)) return null;
   const d = parseDateUTC(dateStr);
   const isoDow = d.getUTCDay() === 0 ? 7 : d.getUTCDay(); // Mon=1..Sun=7
   const monday = new Date(d.getTime() - (isoDow - 1) * 24 * 60 * 60 * 1000);
   return monday.toISOString().slice(0, 10);
 }
 
+/** Sale rows with an unparseable date are excluded from both aggregations rather than throwing. */
 export function computeCashReconciliation(sales: SaleRow[]): CashReconciliationResult {
   const byDayMap = new Map<string, number>();
   const byWeekMap = new Map<string, number>();
 
   for (const sale of sales) {
-    byDayMap.set(sale.date, (byDayMap.get(sale.date) ?? 0) + sale.revenueAr);
     const weekStart = weekStartOf(sale.date);
+    if (weekStart === null) continue;
+    byDayMap.set(sale.date, (byDayMap.get(sale.date) ?? 0) + sale.revenueAr);
     byWeekMap.set(weekStart, (byWeekMap.get(weekStart) ?? 0) + sale.revenueAr);
   }
 

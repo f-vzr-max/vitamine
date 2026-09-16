@@ -18,6 +18,11 @@ export function parseDateUTC(dateStr: string): Date {
   return new Date(`${dateStr}T00:00:00.000Z`);
 }
 
+/** True iff dateStr is a real calendar date in strict YYYY-MM-DD form. */
+export function isValidDateStr(dateStr: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(dateStr) && !Number.isNaN(parseDateUTC(dateStr).getTime());
+}
+
 function daysBetween(fromStr: string, toStr: string): number {
   return Math.round((parseDateUTC(toStr).getTime() - parseDateUTC(fromStr).getTime()) / DAY_MS);
 }

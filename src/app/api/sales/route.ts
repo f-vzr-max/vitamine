@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { isValidDateStr } from "@/lib/targets";
 
 export async function GET() {
   const sales = await prisma.sale.findMany({ orderBy: { date: "desc" } });
@@ -19,10 +20,11 @@ export async function POST(request: NextRequest) {
   if (
     typeof articleId !== "string" ||
     typeof clientId !== "string" ||
-    typeof qty !== "number" ||
+    !Number.isInteger(qty) ||
     qty <= 0 ||
-    typeof unitPriceAr !== "number" ||
-    unitPriceAr < 0
+    !Number.isInteger(unitPriceAr) ||
+    unitPriceAr < 0 ||
+    (date !== undefined && (typeof date !== "string" || !isValidDateStr(date)))
   ) {
     return NextResponse.json({ error: "invalid body" }, { status: 400 });
   }
