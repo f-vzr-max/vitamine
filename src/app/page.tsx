@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import PlanSummary from "./PlanSummary";
 
 type Summary = {
   asOf: string;
@@ -74,6 +75,8 @@ export default function Page() {
           <div className="progress-fill" style={{ width: `${Math.min(100, summary.soldPct)}%` }} />
         </div>
       </div>
+
+      <PlanSummary />
     </>
   );
 }

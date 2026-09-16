@@ -10,7 +10,7 @@ psql_query() {
 
 ACTUAL_TABLES=$(psql_query "SELECT string_agg(table_name, ' ' ORDER BY table_name) FROM information_schema.tables WHERE table_schema='public' AND table_name != '_prisma_migrations';")
 
-EXPECTED_TABLES="Article Client Employee LiquidationConfig PressLog Sale ShiftAssignment User"
+EXPECTED_TABLES="Article AttendanceNote AttendanceRecord Client DailyRecap Employee LiquidationConfig PressLog Sale ShiftAssignment User"
 for t in $EXPECTED_TABLES; do
   if ! grep -qw "$t" <<<"$ACTUAL_TABLES"; then
     echo "schema.sh: missing table $t (found: $ACTUAL_TABLES)" >&2
@@ -19,8 +19,8 @@ for t in $EXPECTED_TABLES; do
 done
 
 TABLE_COUNT=$(wc -w <<<"$ACTUAL_TABLES")
-if [ "$TABLE_COUNT" -ne 8 ]; then
-  echo "schema.sh: expected exactly 8 tables, found $TABLE_COUNT ($ACTUAL_TABLES)" >&2
+if [ "$TABLE_COUNT" -ne 11 ]; then
+  echo "schema.sh: expected exactly 11 tables, found $TABLE_COUNT ($ACTUAL_TABLES)" >&2
   exit 1
 fi
 
@@ -34,4 +34,4 @@ for spec in "Sale:createdBy" "Sale:createdAt" "PressLog:createdBy" "PressLog:cre
   fi
 done
 
-echo "schema.sh: OK (8 tables, audit columns present)"
+echo "schema.sh: OK (11 tables, audit columns present)"

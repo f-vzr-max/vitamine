@@ -19,6 +19,7 @@ const NAV_LINKS = [
   { href: "/clients", label: "Clients" },
   { href: "/cash", label: "Caisse" },
   { href: "/team", label: "Équipe" },
+  { href: "/attendance", label: "Présences" },
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

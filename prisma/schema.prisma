@@ -59,11 +59,13 @@ model Client {
 }
 
 model Employee {
-  id        String            @id @default(cuid())
-  name      String
-  createdBy String
-  createdAt DateTime          @default(now())
-  shifts    ShiftAssignment[]
+  id         String             @id @default(cuid())
+  name       String
+  createdBy  String
+  createdAt  DateTime           @default(now())
+  shifts     ShiftAssignment[]
+  attendance AttendanceRecord[]
+  notes      AttendanceNote[]
 }
 
 model ShiftAssignment {
@@ -76,6 +78,40 @@ model ShiftAssignment {
   isRestHalfDay Boolean  @default(false)
   createdBy     String
   createdAt     DateTime @default(now())
+}
+
+model AttendanceRecord {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  /// Calendar date "YYYY-MM-DD", see PressLog.date.
+  date       String
+  /// PRESENT | DEMIE-J | ABS | OFF -- weekends are computed client-side, never stored.
+  status     String
+  createdBy  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([employeeId, date])
+}
+
+model AttendanceNote {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  /// Calendar date "YYYY-MM-DD", optional -- see PressLog.date.
+  date       String?
+  text       String
+  createdBy  String
+  createdAt  DateTime @default(now())
+}
+
+model DailyRecap {
+  /// Calendar date "YYYY-MM-DD", see PressLog.date. One recap per day.
+  date      String   @id
+  text      String
+  createdBy String
+  updatedAt DateTime @updatedAt
 }
 
 model LiquidationConfig {

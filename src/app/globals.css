@@ -201,3 +201,31 @@ button:disabled {
   background: var(--rust);
   color: #fff;
 }
+
+.kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  font-size: 14px;
+  margin: 0;
+}
+
+.kv dt {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.kv dd {
+  margin: 0;
+}
+
+details.plan-summary summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 4px 0;
+}
+
+details.plan-summary[open] summary {
+  margin-bottom: 8px;
+}

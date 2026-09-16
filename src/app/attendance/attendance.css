@@ -1,0 +1,172 @@
+.att-scroll {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+
+.att-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: max-content;
+  min-width: 100%;
+}
+
+.att-table th,
+.att-table td {
+  font-size: 11px;
+  text-align: center;
+  padding: 0;
+  height: 34px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.att-table thead th {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 700;
+  height: 36px;
+}
+
+.att-name-col {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  text-align: left;
+  padding: 0 8px;
+  min-width: 96px;
+  max-width: 96px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--surface);
+  border-right: 2px solid var(--line);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.att-table thead .att-name-col {
+  background: var(--ink);
+  color: #fff;
+}
+
+.att-day-col {
+  min-width: 26px;
+  width: 26px;
+}
+
+.att-today-col {
+  box-shadow: inset 0 0 0 2px var(--rust);
+}
+
+.att-total-col {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  min-width: 58px;
+  max-width: 58px;
+  background: var(--surface);
+  border-left: 2px solid var(--line);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.att-table thead .att-total-col {
+  background: var(--ink);
+  color: #fff;
+}
+
+.att-present { background: var(--surface); }
+.att-half { background: #f6cb62; color: #5c3d05; font-weight: 700; }
+.att-absent { background: var(--rust); color: #fff; font-weight: 700; }
+.att-off { background: #ffdcae; color: #9c700e; }
+.att-weekend { background: var(--muted); color: #fff; }
+.att-pending { background: var(--bg); }
+
+.att-editable { cursor: pointer; }
+.att-editable:active { filter: brightness(0.92); }
+
+.att-note-badge {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 9px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 999px;
+  padding: 1px 5px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.att-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.att-chip {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.att-note-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+}
+
+.att-note-item:last-child {
+  border-bottom: none;
+}
+
+.att-note-date {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: var(--blue);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.att-note-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.att-note-del {
+  flex: 0 0 auto;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+.att-notes-add {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.att-notes-add input[type="text"] {
+  flex: 1 1 120px;
+  min-width: 0;
+  width: auto;
+}
+
+.att-notes-add input[type="date"] {
+  flex: 0 0 auto;
+  width: auto;
+}
